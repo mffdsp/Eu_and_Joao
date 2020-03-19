@@ -11,14 +11,31 @@ import android.widget.EditText;
 import com.example.tentativa.InfoClass;
 import com.example.tentativa.MainActivity;
 import com.example.tentativa.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class EnviarDepoimento extends AppCompatActivity {
+
+    DatabaseReference DB;
+    EditText et1;
+    EditText et2;
+    EditText et3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enviar_depoimento);
+
+        et1 = ((EditText)findViewById(R.id.sigInput));
+        et2 = ((EditText)findViewById(R.id.textInput));
+        et3 = ((EditText)findViewById(R.id.titleInput));
+
+        et1.setText(InfoClass.signature);
+        et2.setText(InfoClass.boby);
+        et3.setText(InfoClass.title);
+
         getSupportActionBar().hide();
+
     }
 
     public void sendText(View v){

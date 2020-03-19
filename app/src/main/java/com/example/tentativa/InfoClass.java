@@ -17,9 +17,9 @@ public class InfoClass {
     static List<String> USERS;
     static boolean LOG_OUT;
 
-    public static String title = "VoidInfo";
-    public static String boby = "VoidInfo";
-    public static String signature = "VoidInfo";
+    public static String title = "";
+    public static String boby = "";
+    public static String signature = "";
 
 
     public static List<TextStructure> LISTA;

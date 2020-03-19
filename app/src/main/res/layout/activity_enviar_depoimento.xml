@@ -107,27 +107,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/textInput2"
-        android:layout_width="348dp"
-        android:layout_height="206dp"
-        android:layout_marginTop="240dp"
-        android:background="@drawable/box_text"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Digite aqui o corpo da sua história"
-        android:inputType="textCapSentences|textMultiLine"
-        android:isScrollContainer="true"
-        android:keepScreenOn="true"
-        android:layerType="software"
-        android:maxLength="300"
-        android:maxLines="9"
-        android:singleLine="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.644"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/button13"
         android:layout_width="wrap_content"

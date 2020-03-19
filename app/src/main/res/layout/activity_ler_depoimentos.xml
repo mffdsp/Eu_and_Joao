@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context="com.example.projetoJuau.EnviarDepoimento">
+    tools:context="com.example.projetoJuau.LerDepoimentos">
 
 
     <com.google.android.material.textfield.TextInputEditText
@@ -112,7 +112,6 @@
         android:layout_width="348dp"
         android:layout_height="47dp"
         android:layout_marginTop="15dp"
-        android:onClick="sendText"
         android:text="Enviar comentário à autora"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,5 +119,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInput"
         app:layout_constraintVertical_bias="0.022" />
+
+    <TextView
+        android:id="@+id/upInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.246"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button13" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:onClick="upButton"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button13"
+        app:srcCompat="@android:drawable/stat_sys_upload" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

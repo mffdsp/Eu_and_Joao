@@ -9,6 +9,7 @@ public class TextStructure {
     private String ID = "voidInfo";
     public String EMAIL = "voidInfo";
     public String SIGN = "voidInfo";
+    public int UPVOTE = 0;
 
     @Override
     public String toString(){

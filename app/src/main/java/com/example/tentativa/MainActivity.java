@@ -15,11 +15,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,14 +38,12 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //justTORELOAD
-        DB = FirebaseDatabase.getInstance().getReference("count");
-        DB.child("AGR").setValue("heh");
-
+        DB = FirebaseDatabase.getInstance().getReference("texts");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        PB = (ProgressBar) findViewById(R.id.opa);
-        PB.setVisibility(View.INVISIBLE);
+        setContentView(R.layout.activity_bar_nav);
+          PB = (ProgressBar) findViewById(R.id.progressBar4);
+          PB.setVisibility(View.INVISIBLE);
 
 
         DB = FirebaseDatabase.getInstance().getReference("texts");
@@ -57,13 +57,13 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
         if(InfoClass.SEND){
 
             saveText();
-            Toast.makeText(MainActivity.this, "Não é possível enviar textos com titulos repetidos!", Toast.LENGTH_LONG).show();
-
             InfoClass.SEND = false;
         }
-        ((EditText) findViewById(R.id.editText3)).setText(InfoClass.getAccountName());
-        ((EditText) findViewById(R.id.datatext)).setText(InfoClass.getAccountEmail());
+       // ((EditText) findViewById(R.id.editText3)).setText(InfoClass.getAccountName());
+      //  ((EditText) findViewById(R.id.datatext)).setText(InfoClass.getAccountEmail());
         getSupportActionBar().hide();
+        TextView TV = findViewById(R.id.boasV);
+        TV.setText("Olá " + InfoClass.getAccountName() +"\nseja bem vindo!");
     }
 
     @Override
@@ -93,21 +93,20 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
         super.onStart();
 
         DB.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                DB = FirebaseDatabase.getInstance().getReference("texts");
 
                 InfoClass.LISTA = new ArrayList<>();
                 InfoClass.USERS = new ArrayList<>();
 
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
 
-                    TextStructure TS = postSnapshot.getValue(TextStructure.class);
+                        TextStructure TS = postSnapshot.getValue(TextStructure.class);
 
-                    if(!InfoClass.USERS.contains(TS.EMAIL)) {
-                        InfoClass.USERS.add(TS.EMAIL);
-                    }
+                        InfoClass.LISTA.add(TS);
 
-                    InfoClass.LISTA.add(TS);
 
 
                 }
@@ -136,15 +135,25 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
     }
 
     public void saveText(){
-        DB = FirebaseDatabase.getInstance().getReference("texts");
+        try {
+            DB = FirebaseDatabase.getInstance().getReference("texts");
 
-        String id = DB.push().getKey();;
+            String id = DB.push().getKey();
 
-        TextStructure TS = new TextStructure(InfoClass.title, InfoClass.boby, InfoClass.ACCOUNT_ID, InfoClass.signature);
+            TextStructure TS = new TextStructure(InfoClass.title, InfoClass.boby, id, InfoClass.signature);
 
-        DB.child(id).setValue(TS);
+            DB.child(id).setValue(TS);
 
-        Toast.makeText(this, "SALVANDINHO", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Sua história foi submetido com sucesso ao banco de dados :)", Toast.LENGTH_LONG).show();
+            InfoClass.title = "";
+            InfoClass.boby = "";
+
+        }catch (Exception e){
+            Toast.makeText(MainActivity.this, "Erro ao enviar o texto, verifique sua conexão!", Toast.LENGTH_LONG).show();
+
+        }
+
+
     }
 
 
@@ -172,16 +181,19 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
 
     public void lerDepoimento(View v){
 
-        DB = FirebaseDatabase.getInstance().getReference("count");
-        DB.child("AGR").setValue("heh");
+        DB.child("00").setValue(null);
         PB.setVisibility(View.VISIBLE);
+        Toast.makeText(this, "Buscando mensagem aleatória...", Toast.LENGTH_LONG).show();
+
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(getBaseContext(), LerDepoimentos.class));
+                PB.setVisibility(View.INVISIBLE);
+
             }
-        }, 2000);
+        }, 3000);
 
 
     }

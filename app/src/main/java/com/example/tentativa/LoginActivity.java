@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
             updateUI(FBA.getCurrentUser());
         }
 
-        ProgressBar spinner =findViewById(R.id.progressBar3);
+        ProgressBar spinner = findViewById(R.id.progressBar3);
 
         spinner.getIndeterminateDrawable().setColorFilter(Color.rgb(248,4,156), android.graphics.PorterDuff.Mode.MULTIPLY);
     }
@@ -162,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
             InfoClass.setAccountId(acc.getId());
             InfoClass.setAccountPhoto(acc.getPhotoUrl());
 
-            Toast.makeText(LoginActivity.this,   acc.getServerAuthCode(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(LoginActivity.this,   acc.getServerAuthCode(), Toast.LENGTH_LONG).show();
 
             progressBar.setVisibility(View.VISIBLE);
             new Handler().postDelayed(new Runnable() {
@@ -173,9 +173,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }, LOGIN_DELAY);
             //((TextView) findViewById(R.id.infoText)).setText(InfoClass.getAccountName() + "\n" + InfoClass.getAccountEmail());
-
-          //  setProfileImage(
-            //  accPhoto.toString());
 
 
     }

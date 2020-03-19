@@ -5,48 +5,69 @@
     android:id="@+id/back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8BC34A"
-    tools:context="com.example.projetoJuau.BarNav">
+    android:background="#000000"
+    tools:context="com.example.tentativa.MainActivity">
 
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/boasV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vai ter tipo, bem vindo joaquim"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="78dp"
-        tools:layout_editor_absoluteY="67dp" />
+        android:text="something"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <TableLayout
-        android:layout_width="180dp"
-        android:layout_height="161dp"
+        android:id="@+id/tableLayout"
+        android:layout_width="185dp"
+        android:layout_height="179dp"
         android:foregroundGravity="bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.518">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/button6"
-                android:layout_width="89dp"
-                android:layout_height="79dp"
-                android:text="Buttonaaa" />
+            android:layout_height="match_parent"
+            android:layout_margin="2sp"
+            android:layout_marginLeft="2sp"
+            android:layout_marginTop="2sp"
+            android:layout_marginRight="2sp">
 
             <Button
                 android:id="@+id/button8"
                 android:layout_width="89dp"
                 android:layout_height="79dp"
                 android:background="#00C5ACAC"
-                android:drawableTop="@drawable/ic_t2"
-                android:text="CLica aq"
+                android:drawableTop="@drawable/ic_editar"
+                android:text="Escrever"
+                android:onClick="enviarDepoimento"
+                android:textColor="#E6FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="108dp"
+                tools:layout_editor_absoluteY="302dp" />
 
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="89dp"
+                android:layout_height="79dp"
+                android:layout_marginLeft="6sp"
+                android:background="#00C5ACAC"
+                android:drawableTop="@drawable/ic_ler"
+                android:onClick="lerDepoimento"
+                android:text="ler"
+                android:textColor="#E6FFFFFF"
                 android:textSize="10sp"
-                android:textStyle="bold|italic"
+                android:textStyle="bold"
                 tools:layout_editor_absoluteX="108dp"
                 tools:layout_editor_absoluteY="302dp" />
 
@@ -55,23 +76,38 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="14sp"
             tools:layout_editor_absoluteX="108dp"
             tools:layout_editor_absoluteY="381dp">
 
             <Button
-                android:id="@+id/button7"
+                android:id="@+id/button16"
                 android:layout_width="89dp"
                 android:layout_height="79dp"
-                android:text="Button"
-                tools:layout_editor_absoluteY="406dp" />
+                android:background="#00C5ACAC"
+                android:drawableTop="@drawable/ic_config"
+                android:text="Configurações"
+
+                android:textColor="#E6FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="108dp"
+                tools:layout_editor_absoluteY="302dp" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/button15"
                 android:layout_width="89dp"
                 android:layout_height="79dp"
-                android:background="@drawable/buttonclick"
-                tools:layout_editor_absoluteX="197dp"
-                tools:layout_editor_absoluteY="381dp" />
+                android:layout_marginLeft="6sp"
+                android:background="#00C5ACAC"
+                android:drawableTop="@drawable/ic_doar"
+
+                android:text="Doar"
+                android:textColor="#E6FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="108dp"
+                tools:layout_editor_absoluteY="302dp" />
 
         </TableRow>
 
@@ -93,6 +129,31 @@
         android:src="@drawable/katie_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.957"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.977"
+        app:srcCompat="@android:drawable/ic_dialog_info" />
+
+    <ProgressBar
+        android:id="@+id/progressBar4"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="36dp"
+        android:layout_height="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
