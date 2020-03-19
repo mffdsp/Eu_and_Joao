@@ -62,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         //Mudar cor
         getWindow().getDecorView().setBackgroundColor(Color.rgb(255,70, 0));
         getSupportActionBar().hide();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         SB = findViewById(R.id.gbutton);
         //SOB = findViewById(R.id.signOutButton);
@@ -91,7 +90,6 @@ public class LoginActivity extends AppCompatActivity {
         if(GoogleSignIn.getLastSignedInAccount(getApplicationContext()) != null){
             LOGIN_DELAY = 0;
             updateUI(FBA.getCurrentUser());
-
         }
 
         ProgressBar spinner =findViewById(R.id.progressBar3);
@@ -137,11 +135,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(LoginActivity.this, "SUCESSO", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(LoginActivity.this, "", Toast.LENGTH_LONG).show();
                     FirebaseUser user = FBA.getCurrentUser();
                     updateUI(user);
                 }else{
-                    Toast.makeText(LoginActivity.this, "ERROZINHO", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "A conta atual encontra-se desativada", Toast.LENGTH_LONG).show();
                     updateUI(null);
                 }
             }
@@ -152,16 +150,20 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user){
 
         GoogleSignInAccount acc = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-        if(acc != null){
-
-            //Salvando nas variaveis globai
+        if(user == null){
+            GSC.signOut();
+            return;
+        }
+            //Salvando nas variaveis globais
             InfoClass.acc = acc;
+
             InfoClass.setAccountName(acc.getDisplayName());
             InfoClass.setAccountEmail(acc.getEmail());
             InfoClass.setAccountId(acc.getId());
             InfoClass.setAccountPhoto(acc.getPhotoUrl());
 
-            Toast.makeText(LoginActivity.this, "Login efetuado com sucesso!", Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this,   acc.getServerAuthCode(), Toast.LENGTH_LONG).show();
+
             progressBar.setVisibility(View.VISIBLE);
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -172,9 +174,9 @@ public class LoginActivity extends AppCompatActivity {
             }, LOGIN_DELAY);
             //((TextView) findViewById(R.id.infoText)).setText(InfoClass.getAccountName() + "\n" + InfoClass.getAccountEmail());
 
-          //  setProfileImage(accPhoto.toString());
+          //  setProfileImage(
+            //  accPhoto.toString());
 
-        }
 
     }
 

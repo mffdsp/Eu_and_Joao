@@ -16,7 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class ChatMaybe extends AppCompatActivity {
         getSupportActionBar().hide();
 
         chatString = new ArrayList<>();
-        textBox = findViewById(R.id.chatBox);
+        textBox = findViewById(R.id.textInput);
         CHAT = findViewById(R.id.CHATO);
 
         //saveToDB();

@@ -13,12 +13,13 @@ public class InfoClass {
     static String ACCOUNT_ID = "VoidInfo";
     static Uri ACCOUNT_PHOTO = null;
     static GoogleSignInAccount acc = null;
-    static boolean SEND = false;
+    public static boolean SEND = false;
     static List<String> USERS;
     static boolean LOG_OUT;
 
-    static String title = "VoidInfo";
-    static String boby = "VoidInfo";
+    public static String title = "VoidInfo";
+    public static String boby = "VoidInfo";
+    public static String signature = "VoidInfo";
 
 
     public static List<TextStructure> LISTA;

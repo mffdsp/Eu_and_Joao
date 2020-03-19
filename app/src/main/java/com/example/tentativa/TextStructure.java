@@ -8,6 +8,7 @@ public class TextStructure {
     private String body = "voidInfo";
     private String ID = "voidInfo";
     public String EMAIL = "voidInfo";
+    public String SIGN = "voidInfo";
 
     @Override
     public String toString(){
@@ -16,10 +17,12 @@ public class TextStructure {
     public TextStructure(){
 
     }
-    public TextStructure(String title, String body, String ID){
+    public TextStructure(String title, String body, String ID, String sign){
         this.ID = ID;
         this.body = body;
         this.title = title;
+        this.SIGN = sign;
+        this.EMAIL = InfoClass.getAccountEmail();
     }
     public String getTitle() {
         return title;

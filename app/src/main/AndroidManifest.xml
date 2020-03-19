@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.projetoJuau.BarNav"/>
+        <activity android:name="com.example.projetoJuau.Doacao"></activity>
+        <activity android:name="com.example.projetoJuau.EditarInfo" />
+        <activity android:name="com.example.projetoJuau.LerDepoimentos" />
+        <activity android:name="com.example.projetoJuau.EnviarDepoimento" />
+        <activity android:name="com.example.projetoJuau.BarNav" />
         <activity
             android:name=".ChatMaybe"
             android:screenOrientation="portrait" />
@@ -34,7 +38,7 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="SplashActivity"
+            android:name=".SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
