@@ -5,10 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.Image;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projetoJuau.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -34,10 +37,18 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.net.InetAddress;
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
 
+    boolean INTERNET = false;
     //Criar lista com "Notas"
     //Criar objeto Notas, upar pro FireBase;
     //Dar o get nesse objeto, igual fiz com "pessoa"
@@ -51,10 +62,12 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView profileImage;
     private ProgressBar progressBar;
     private int LOGIN_DELAY = 2000;
+    DatabaseReference DB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        DB = FirebaseDatabase.getInstance().getReference("users");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -120,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
             //Toast.makeText(LoginActivity.this, "Sucesso", Toast.LENGTH_LONG).show();
             FirebaseGoogleAuth(acc);
         }catch (ApiException e){
-            //Toast.makeText(LoginActivity.this, "ERRO AO LOGAR", Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this, "Verifique a conexão", Toast.LENGTH_LONG).show();
             FirebaseGoogleAuth(null );
 
         }
@@ -139,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                     FirebaseUser user = FBA.getCurrentUser();
                     updateUI(user);
                 }else{
-                    Toast.makeText(LoginActivity.this, "A conta atual encontra-se desativada", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "A conta atual encontra-se desativada :(\nEntre em contato com mffsp@ic.ufal.com para informações adicionais", Toast.LENGTH_LONG).show();
                     updateUI(null);
                 }
             }
@@ -150,6 +163,7 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user){
 
         GoogleSignInAccount acc = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+
         if(user == null){
             GSC.signOut();
             return;
@@ -177,4 +191,48 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private boolean isNetworkConnected() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName("google.com");
+            //You can replace it with your name
+            return !ipAddr.equals("");
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+        DB.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                DB = FirebaseDatabase.getInstance().getReference("users");
+
+                InfoClass.USERS = new ArrayList<>();
+
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+
+                    User TS = postSnapshot.getValue(User.class);
+                    InfoClass.USERS.add(TS);
+
+                    if(TS.id.equals(InfoClass.getAccountId())){
+                        InfoClass.CONTATO = TS.contato;
+                        InfoClass.IDADE = TS.idade;
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 }

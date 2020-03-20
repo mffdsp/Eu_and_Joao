@@ -2,17 +2,18 @@ package com.example.projetoJuau;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
 import com.example.tentativa.InfoClass;
+import com.example.tentativa.LoginActivity;
 import com.example.tentativa.MainActivity;
 import com.example.tentativa.R;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class EnviarDepoimento extends AppCompatActivity {
 
@@ -26,7 +27,7 @@ public class EnviarDepoimento extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enviar_depoimento);
 
-        et1 = ((EditText)findViewById(R.id.sigInput));
+        et1 = ((EditText)findViewById(R.id.sigInput3));
         et2 = ((EditText)findViewById(R.id.textInput));
         et3 = ((EditText)findViewById(R.id.titleInput));
 
@@ -39,12 +40,25 @@ public class EnviarDepoimento extends AppCompatActivity {
     }
 
     public void sendText(View v){
-        InfoClass.signature = ((EditText)findViewById(R.id.sigInput)).getText().toString();
-                InfoClass.boby = ((EditText)findViewById(R.id.textInput)).getText().toString();
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Deseja confirmar o envio?")
+                .setMessage("")
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        InfoClass.signature = ((EditText)findViewById(R.id.sigInput3)).getText().toString();
+                        InfoClass.boby = ((EditText)findViewById(R.id.textInput)).getText().toString();
                         InfoClass.title = ((EditText)findViewById(R.id.titleInput)).getText().toString();
 
                         InfoClass.SEND = true;
                         startActivity(new Intent(getBaseContext(), MainActivity.class));
                         finish();
+                    }
+
+                })
+                .setNegativeButton("Não", null)
+                .show();
     }
 }

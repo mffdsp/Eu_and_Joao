@@ -9,11 +9,12 @@
 
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/sigInput"
+        android:id="@+id/sigInput3"
         android:layout_width="341dp"
         android:layout_height="32dp"
         android:layout_marginBottom="80dp"
         android:background="@drawable/rounded_text"
+        android:gravity="center"
         android:hint="Máx. 30"
         android:inputType="textCapWords"
         android:maxLength="30"
@@ -29,8 +30,9 @@
         android:id="@+id/titleInput"
         android:layout_width="341dp"
         android:layout_height="32dp"
-        android:background="@drawable/rounded_text"
         android:layout_marginBottom="156dp"
+        android:background="@drawable/rounded_text"
+        android:gravity="center"
         android:hint="Máx. 30"
         android:inputType="textCapSentences"
         android:lines="1"
@@ -70,7 +72,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sigInput" />
+        app:layout_constraintTop_toBottomOf="@+id/sigInput3" />
 
     <TextView
         android:id="@+id/textView8"

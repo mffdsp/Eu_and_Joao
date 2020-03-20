@@ -24,14 +24,14 @@ public class GetUsers extends AppCompatActivity {
         userList = new ArrayList<>();
 
 
-        for(String TS : InfoClass.USERS){
-
-            String currentEmail = TS;
-            int indexof =  currentEmail.indexOf("@");
-            String userName = currentEmail.substring(0, indexof);
-
-            userList.add(userName);
-        }
+//        for(String TS : InfoClass.USERS){
+//
+//            String currentEmail = TS;
+//            int indexof =  currentEmail.indexOf("@");
+//            String userName = currentEmail.substring(0, indexof);
+//
+//            userList.add(userName);
+//        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, userList);
 

@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tentativa.InfoClass;
-import com.example.tentativa.MainActivity;
 import com.example.tentativa.R;
 import com.example.tentativa.TextStructure;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +24,7 @@ public class LerDepoimentos extends AppCompatActivity {
     EditText mEdit3;
     TextView mEdit4;
     String id;
+    String newSTRING;
     boolean LIKED = false;
 
 
@@ -36,13 +36,14 @@ public class LerDepoimentos extends AppCompatActivity {
         getSupportActionBar().hide();
 
         mEdit = findViewById(R.id.titleInput);
-        mEdit2 = findViewById(R.id.sigInput);
+        mEdit2 = findViewById(R.id.sigInput3);
         mEdit3 = findViewById(R.id.textInput);
         mEdit4 = findViewById(R.id.upInput);
 
         mEdit.setEnabled(false);
         mEdit2.setEnabled(false);
-        mEdit3.setEnabled(false);
+        mEdit3.setFocusableInTouchMode(false);
+        mEdit3.clearFocus();
 
         try {
             int random = new Random().nextInt(InfoClass.LISTA.size());
@@ -53,7 +54,8 @@ public class LerDepoimentos extends AppCompatActivity {
                     mEdit.setText(TS.getTitle());
                     mEdit2.setText(TS.SIGN);
                     mEdit3.setText(TS.getBody());
-                    mEdit4.setText(Integer.toString(TS.UPVOTE));
+                    mEdit4.setText(Integer.toString(TS.UPVOTE) + " - Votos positivos");
+                    newSTRING = Integer.toString(TS.UPVOTE);
                     id = TS.getID();
                     break;
                 }
@@ -63,7 +65,6 @@ public class LerDepoimentos extends AppCompatActivity {
         }catch (Exception e){
 
             DB = FirebaseDatabase.getInstance().getReference("texts");
-            DB.child("AGR").setValue("heh");
             Toast.makeText(LerDepoimentos.this, "Erro ao ler mensagens", Toast.LENGTH_LONG).show();
         }
 
@@ -71,23 +72,23 @@ public class LerDepoimentos extends AppCompatActivity {
     }
     public void upButton(View v){
 
+            try {
+                DB = FirebaseDatabase.getInstance().getReference("texts");
+                int value = Integer.parseInt(newSTRING) + 1;
+                if (LIKED) {
+                    DB.child(id).child("UPVOTE").setValue(value - 1);
+                    mEdit4.setText(Integer.toString(value - 1) + " - Votos positivos");
+                    LIKED = false;
+                    return;
+                }
+                DB.child(id).child("UPVOTE").setValue(value);
+                mEdit4.setText(Integer.toString(value) + " - Votos positivos");
+                LIKED = true;
+            }catch (Exception e){
+                Toast.makeText(LerDepoimentos.this, "Erro de conexão", Toast.LENGTH_LONG).show();
 
-        try{
-            DB = FirebaseDatabase.getInstance().getReference("texts");
-            int value = Integer.parseInt(mEdit4.getText().toString()) + 1;
-            if(LIKED){
-                DB.child(id).child("UPVOTE").setValue(value - 2);
-                mEdit4.setText(Integer.toString(value - 2));
-                LIKED = false;
-                return;
             }
-            DB.child(id).child("UPVOTE").setValue(value);
-            mEdit4.setText(Integer.toString(value));
-            LIKED = true;
-        }catch (Exception e){
-            Toast.makeText(LerDepoimentos.this, "Erro, verifique conexão!", Toast.LENGTH_LONG).show();
 
-        }
 
     }
     public void setValue(){

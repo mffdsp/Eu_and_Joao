@@ -2,8 +2,10 @@ package com.example.tentativa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -35,4 +37,5 @@ public class SplashActivity extends AppCompatActivity {
 
         spinner.getIndeterminateDrawable().setColorFilter(Color.rgb(248,4,156), android.graphics.PorterDuff.Mode.MULTIPLY);
     }
+
 }

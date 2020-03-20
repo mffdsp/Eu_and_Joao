@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projetoJuau.BarNav;
+import com.example.projetoJuau.EditarInfo;
 import com.example.projetoJuau.EnviarDepoimento;
 import com.example.projetoJuau.LerDepoimentos;
 import com.example.projetoJuau.User;
@@ -13,6 +14,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.icu.text.IDNA;
@@ -45,7 +48,12 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
           PB = (ProgressBar) findViewById(R.id.progressBar4);
           PB.setVisibility(View.INVISIBLE);
 
+        try {
+            saveUser();
+        }catch (Exception e){
+            Toast.makeText(MainActivity.this, "Erro de Conexão", Toast.LENGTH_LONG).show();
 
+        }
         DB = FirebaseDatabase.getInstance().getReference("texts");
 
         Toast.makeText(MainActivity.this, "Bem vindo(a), " + InfoClass.getAccountName(), Toast.LENGTH_LONG).show();
@@ -75,18 +83,18 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
         startActivity(new Intent(getBaseContext(), OptionScreen.class));
 
     }
-    public void saveToDB(){
-
-        String id = DB.push().getKey();
-
-//        //TextStructure TS = new TextStructure(InfoClass.title, InfoClass.boby, id);
+//    public void saveToDB(){
+//
+//        String id = DB.push().getKey();
+//
+//        TextStructure TS = new TextStructure(InfoClass.title, InfoClass.boby, id);
 //        TS.EMAIL = InfoClass.getAccountEmail();
 //
 //        DB.child(id).setValue(TS);
 //
 //        Toast.makeText(this, "SALVANDINHO", Toast.LENGTH_LONG).show();
-
-    }
+//
+//    }
 
     @Override
     protected void onStart(){
@@ -96,18 +104,14 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                DB = FirebaseDatabase.getInstance().getReference("texts");
 
+                DB = FirebaseDatabase.getInstance().getReference("texts");
                 InfoClass.LISTA = new ArrayList<>();
-                InfoClass.USERS = new ArrayList<>();
 
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
 
                         TextStructure TS = postSnapshot.getValue(TextStructure.class);
-
                         InfoClass.LISTA.add(TS);
-
-
 
                 }
             }
@@ -158,21 +162,44 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
 
 
     public void saveUser(){
-        String id = InfoClass.ACCOUNT_ID;
 
-        User TS = new User(InfoClass.ACCOUNT_NAME, InfoClass.getAccountEmail(), "12", InfoClass.ACCOUNT_ID, "sou legal demais");
+        if(InfoClass.SAVED) {
+            DB = FirebaseDatabase.getInstance().getReference("users");
 
-        DB.child(id).setValue(TS);
+            String id = InfoClass.ACCOUNT_ID;
 
-        Toast.makeText(this, "SALVANDINHO", Toast.LENGTH_LONG).show();
+            User TS = new User(InfoClass.ACCOUNT_NAME, InfoClass.getAccountEmail(), InfoClass.IDADE, InfoClass.ACCOUNT_ID, "sou legal demais", InfoClass.CONTATO, "2020");
+
+            DB.child(id).setValue(TS);
+
+            Toast.makeText(this, "SALVANDINHO", Toast.LENGTH_LONG).show();
+
+        }
 
 
     }
 
     public void logOut(View v){
-        InfoClass.LOG_OUT = true;
-        startActivity(new Intent(getBaseContext(), LoginActivity.class));
-        finish();
+
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Deseja realmente sair?")
+                .setMessage("")
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        InfoClass.LOG_OUT = true;
+                        startActivity(new Intent(getBaseContext(), LoginActivity.class));
+                        finish();
+
+                    }
+
+                })
+                .setNegativeButton("Não", null)
+                .show();
+
     }
 
     public void enviarDepoimento(View v){
@@ -196,6 +223,21 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
         }, 3000);
 
 
+    }
+
+    public void config(View v){
+
+        PB.setVisibility(View.VISIBLE);
+        Toast.makeText(this, "Aguarde...", Toast.LENGTH_LONG).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(getBaseContext(), EditarInfo.class));
+                PB.setVisibility(View.INVISIBLE);
+
+            }
+        }, 2000);
     }
 
 

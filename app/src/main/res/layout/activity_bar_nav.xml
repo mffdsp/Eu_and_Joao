@@ -18,8 +18,10 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.645"
         tools:ignore="MissingConstraints" />
 
     <TableLayout
@@ -86,6 +88,7 @@
                 android:layout_height="79dp"
                 android:background="#00C5ACAC"
                 android:drawableTop="@drawable/ic_config"
+                android:onClick="config"
                 android:text="Configurações"
 
                 android:textColor="#E6FFFFFF"
@@ -145,6 +148,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.977"
         app:srcCompat="@android:drawable/ic_dialog_info" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:background="#00FFFFFF"
+        android:hapticFeedbackEnabled="false"
+        android:onClick="logOut"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.019"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/abc_vector_test" />
 
     <ProgressBar
         android:id="@+id/progressBar4"

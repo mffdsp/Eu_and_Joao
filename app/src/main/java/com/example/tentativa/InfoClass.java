@@ -2,11 +2,13 @@ package com.example.tentativa;
 
 import android.net.Uri;
 
+import com.example.projetoJuau.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.List;
 
 public class InfoClass {
+
 
     static String ACCOUNT_NAME = "VoidInfo";
     static String ACCOUNT_EMAIL = "VoidInfo";
@@ -14,13 +16,17 @@ public class InfoClass {
     static Uri ACCOUNT_PHOTO = null;
     static GoogleSignInAccount acc = null;
     public static boolean SEND = false;
-    static List<String> USERS;
+    static public List<User> USERS;
     static boolean LOG_OUT;
 
     public static String title = "";
     public static String boby = "";
     public static String signature = "";
 
+    public static  String IDADE;
+    public static String CONTATO;
+
+    public static boolean SAVED = false;
 
     public static List<TextStructure> LISTA;
 
