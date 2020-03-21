@@ -4,28 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GetActivity">
+    tools:context=".ChatMaybe">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/sigInput3"
+        android:layout_width="347dp"
+        android:layout_height="174dp"
+        android:background="@drawable/rounded_text"
+        android:gravity="center"
+        android:inputType="textCapSentences|textMultiLine"
+        android:isScrollContainer="true"
+        android:keepScreenOn="true"
+        android:layerType="software"
+        android:maxLength="300"
+        android:maxLines="9"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.825" />
 
     <ListView
-        android:id="@+id/TextList"
+        android:id="@+id/CHATO"
         android:layout_width="380dp"
         android:layout_height="385dp"
+        android:isScrollContainer="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.242" />
+        app:layout_constraintVertical_bias="0.046" />
 
-    <TextView
-        android:id="@+id/bodyText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="bodyText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextList"
-        app:layout_constraintVertical_bias="0.489" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

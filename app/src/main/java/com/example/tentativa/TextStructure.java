@@ -2,6 +2,9 @@ package com.example.tentativa;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TextStructure {
 
     private String title = "voidInfo";
@@ -9,7 +12,7 @@ public class TextStructure {
     private String ID = "voidInfo";
     public String EMAIL = "voidInfo";
     public String SIGN = "voidInfo";
-    public int UPVOTE = 0;
+    public List<Integer> UPVOTE;
 
     @Override
     public String toString(){
@@ -24,6 +27,11 @@ public class TextStructure {
         this.title = title;
         this.SIGN = sign;
         this.EMAIL = InfoClass.getAccountEmail();
+        UPVOTE = new ArrayList<>();
+        UPVOTE.add(0);
+        UPVOTE.add(0);
+        UPVOTE.add(0);
+
     }
     public String getTitle() {
         return title;

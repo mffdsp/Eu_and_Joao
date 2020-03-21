@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
     <item>
-        <bitmap android:src="@drawable/katie_white"/>
+        <bitmap android:src="@drawable/katie_white2"/>
     </item>
     <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android">

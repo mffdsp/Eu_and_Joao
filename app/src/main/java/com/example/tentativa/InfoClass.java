@@ -9,6 +9,7 @@ import java.util.List;
 
 public class InfoClass {
 
+    static public String TO;
 
     static String ACCOUNT_NAME = "VoidInfo";
     static String ACCOUNT_EMAIL = "VoidInfo";
@@ -27,6 +28,8 @@ public class InfoClass {
     public static String CONTATO;
 
     public static boolean SAVED = false;
+
+    public static boolean BAN = false;
 
     public static List<TextStructure> LISTA;
 

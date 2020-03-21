@@ -63,15 +63,17 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private int LOGIN_DELAY = 2000;
     DatabaseReference DB;
+    TextView TV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
 
         DB = FirebaseDatabase.getInstance().getReference("users");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        TV = findViewById(R.id.textView4);
         //Mudar cor
         getWindow().getDecorView().setBackgroundColor(Color.rgb(255,70, 0));
         getSupportActionBar().hide();
@@ -89,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
 
         GSC = GoogleSignIn.getClient(this, GSO);
 
-
         logOutAction();
 
         SB.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(GoogleSignIn.getLastSignedInAccount(getApplicationContext()) != null){
             LOGIN_DELAY = 0;
+            //FirebaseGoogleAuth(GoogleSignIn.getLastSignedInAccount(getApplicationContext())); //Para verificar ban, mas demora
             updateUI(FBA.getCurrentUser());
         }
 

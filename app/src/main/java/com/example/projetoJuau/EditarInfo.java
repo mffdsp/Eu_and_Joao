@@ -103,7 +103,6 @@ public class EditarInfo extends AppCompatActivity {
 
             Toast.makeText(EditarInfo.this, "Alterado com sucesso!", Toast.LENGTH_LONG).show();
             InfoClass.SAVED = true;
-            startActivity(new Intent(getBaseContext(), MainActivity.class));
             finish();
 
         }catch (Exception e){

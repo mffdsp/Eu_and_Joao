@@ -3,15 +3,18 @@ package com.example.tentativa;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projetoJuau.BanList;
 import com.example.projetoJuau.BarNav;
 import com.example.projetoJuau.EditarInfo;
 import com.example.projetoJuau.EnviarDepoimento;
 import com.example.projetoJuau.LerDepoimentos;
+import com.example.projetoJuau.MsgBox;
 import com.example.projetoJuau.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import android.app.AlertDialog;
@@ -22,6 +25,7 @@ import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,19 +38,38 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
 
     String FINAL_NAME = "oo";
     DatabaseReference DB;
+    DatabaseReference DBAN;
     DatabaseReference DR;
     List<Pessoa> listaDePessoas;
     ProgressBar PB;
 
+    Button bt1; //8
+    Button bt2; //6
+    Button bt3; //16
+    Button bt4; //15
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //justTORELOAD
+
         DB = FirebaseDatabase.getInstance().getReference("texts");
+        DBAN = FirebaseDatabase.getInstance().getReference("bannedUsers");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar_nav);
-          PB = (ProgressBar) findViewById(R.id.progressBar4);
-          PB.setVisibility(View.INVISIBLE);
+
+        bt1 = findViewById(R.id.button8);
+        bt2 = findViewById(R.id.button6);
+        bt3 = findViewById(R.id.button16);
+        bt4 = findViewById(R.id.button15);
+
+        ENABLEALL();
+
+        PB = (ProgressBar) findViewById(R.id.progressBar4);
+        PB.setVisibility(View.INVISIBLE);
+
+       //onde();
 
         try {
             saveUser();
@@ -99,7 +122,10 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-
+        if(InfoClass.BAN){
+            logOut(null);
+        }
+        ENABLEALL();
         DB.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -114,6 +140,36 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
                         InfoClass.LISTA.add(TS);
 
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        DBAN.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try{
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+
+                    GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {};
+
+                    List<String> ban = postSnapshot.getValue(t);
+
+                    for(String b : ban){
+
+                        if(b.equals(InfoClass.ACCOUNT_EMAIL)) {
+                            InfoClass.BAN = true;
+                        }
+
+                    }
+                }}catch (Exception e){
+                    Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                }
+
             }
 
             @Override
@@ -149,6 +205,7 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
             DB.child(id).setValue(TS);
 
             Toast.makeText(MainActivity.this, "Sua história foi submetido com sucesso ao banco de dados :)", Toast.LENGTH_LONG).show();
+
             InfoClass.title = "";
             InfoClass.boby = "";
 
@@ -160,7 +217,22 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
 
     }
 
+    public void toMsg(View v){
 
+        DISABLEEALL();
+        startActivity(new Intent(getBaseContext(), ChatMaybe.class));
+
+    }
+//    public void onde(){
+//        DB = FirebaseDatabase.getInstance().getReference("msgBox");
+//
+//        String id = DB.push().getKey();
+//
+//        MsgBox TS = new MsgBox("mffdsplol@gmail.com", "joao@gmail.com", "FOIMASSASAASAS");
+//
+//        DB.child(id).setValue(TS);
+//
+//    }
     public void saveUser(){
 
         if(InfoClass.SAVED) {
@@ -181,6 +253,12 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
 
     public void logOut(View v){
 
+        if(InfoClass.BAN){
+            InfoClass.LOG_OUT = true;
+            startActivity(new Intent(getBaseContext(), LoginActivity.class));
+            finish();
+            return;
+        }
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Deseja realmente sair?")
@@ -203,10 +281,13 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
     }
 
     public void enviarDepoimento(View v){
+        DISABLEEALL();
         startActivity(new Intent(getBaseContext(), EnviarDepoimento.class));
     }
 
     public void lerDepoimento(View v){
+
+        DISABLEEALL();
 
         DB.child("00").setValue(null);
         PB.setVisibility(View.VISIBLE);
@@ -226,6 +307,7 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
     }
 
     public void config(View v){
+        DISABLEEALL();
 
         PB.setVisibility(View.VISIBLE);
         Toast.makeText(this, "Aguarde...", Toast.LENGTH_LONG).show();
@@ -240,6 +322,22 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
         }, 2000);
     }
 
+    public void ENABLEALL(){
+        bt1.setClickable(true);
+        bt2.setClickable(true);
+        bt3.setClickable(true);
+        bt4.setClickable(true);
+
+    }
+
+
+
+    public void DISABLEEALL(){
+        bt1.setClickable(false);
+        bt2.setClickable(false);
+        bt3.setClickable(false);
+        bt4.setClickable(false);
+    }
 
 }
 
