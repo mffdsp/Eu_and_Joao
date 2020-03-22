@@ -9,6 +9,8 @@ import java.util.List;
 
 public class InfoClass {
 
+    static public  int size;
+
     static public String TO;
 
     static String ACCOUNT_NAME = "VoidInfo";

@@ -83,7 +83,7 @@
             tools:layout_editor_absoluteY="381dp">
 
             <Button
-                android:id="@+id/button16"
+                android:id="@+id/bt3"
                 android:layout_width="89dp"
                 android:layout_height="79dp"
                 android:background="#00C5ACAC"

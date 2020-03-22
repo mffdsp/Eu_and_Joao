@@ -3,12 +3,10 @@ package com.example.tentativa;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.projetoJuau.BanList;
 import com.example.projetoJuau.BarNav;
 import com.example.projetoJuau.EditarInfo;
 import com.example.projetoJuau.EnviarDepoimento;
 import com.example.projetoJuau.LerDepoimentos;
-import com.example.projetoJuau.MsgBox;
 import com.example.projetoJuau.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,12 +19,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +35,8 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
     String FINAL_NAME = "oo";
     DatabaseReference DB;
     DatabaseReference DBAN;
+    DatabaseReference SIZE;
+
     DatabaseReference DR;
     List<Pessoa> listaDePessoas;
     ProgressBar PB;
@@ -47,6 +45,7 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
     Button bt2; //6
     Button bt3; //16
     Button bt4; //15
+    TextView TV;
 
 
     @Override
@@ -55,13 +54,15 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
 
         DB = FirebaseDatabase.getInstance().getReference("texts");
         DBAN = FirebaseDatabase.getInstance().getReference("bannedUsers");
+        SIZE = FirebaseDatabase.getInstance().getReference("size");
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar_nav);
 
         bt1 = findViewById(R.id.button8);
         bt2 = findViewById(R.id.button6);
-        bt3 = findViewById(R.id.button16);
+        bt3 = findViewById(R.id.bt3);
         bt4 = findViewById(R.id.button15);
 
         ENABLEALL();
@@ -93,8 +94,9 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
        // ((EditText) findViewById(R.id.editText3)).setText(InfoClass.getAccountName());
       //  ((EditText) findViewById(R.id.datatext)).setText(InfoClass.getAccountEmail());
         getSupportActionBar().hide();
-        TextView TV = findViewById(R.id.boasV);
-        TV.setText("Olá " + InfoClass.getAccountName() +"\nseja bem vindo!");
+        TV = findViewById(R.id.boasV);
+        TV.setText("Olá, " + InfoClass.getAccountName() + "!\nJá são " + InfoClass.size +" histórias contadas.\nAdicione a sua :)");
+
     }
 
     @Override
@@ -178,6 +180,25 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
             }
         });
 
+        SIZE.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    TV = findViewById(R.id.boasV);
+
+                    InfoClass.size = snapshot.child("atual").getValue(Integer.class);
+
+                TV.setText("Olá, " + InfoClass.getAccountName() + "!\nJá são " + InfoClass.size +" histórias contadas.\nAdicione a sua :)");
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     public void goToLogin(View v){
@@ -203,6 +224,8 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
             TextStructure TS = new TextStructure(InfoClass.title, InfoClass.boby, id, InfoClass.signature);
 
             DB.child(id).setValue(TS);
+            InfoClass.size += 1;
+            SIZE.child("atual").setValue(InfoClass.size);
 
             Toast.makeText(MainActivity.this, "Sua história foi submetido com sucesso ao banco de dados :)", Toast.LENGTH_LONG).show();
 
@@ -301,16 +324,16 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
                 PB.setVisibility(View.INVISIBLE);
 
             }
-        }, 3000);
+        }, 1500);
 
 
     }
 
     public void config(View v){
+
         DISABLEEALL();
 
         PB.setVisibility(View.VISIBLE);
-        Toast.makeText(this, "Aguarde...", Toast.LENGTH_LONG).show();
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -319,7 +342,7 @@ public class MainActivity<mFirebaseRef> extends AppCompatActivity {
                 PB.setVisibility(View.INVISIBLE);
 
             }
-        }, 2000);
+        }, 300);
     }
 
     public void ENABLEALL(){
